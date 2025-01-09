@@ -23,6 +23,7 @@ Available operations are:
 - `,`: pops the primary stack, and pushes the output on the secondary;
 - `;`: pops the secondary stack, and pushes the output on the primary;
 - `@`: pops the secondary stack, discarding the result;
+    - this implies that `"insert comment here" ,@` is a valid way to create comments (the comment is pushed on the primary stack, moved to the secondary, and discarded).
 - `#`: swaps the primary and secondary stacks (the primary becomes secondary, and viceversa);
 - `.`: duplicates the last value on the primary stack (x = pop, push x, push x);
 - `$`: pops the primary stack, and prints the output;
