@@ -1,0 +1,4 @@
+{ + $ } "addAndPrint" :
+
+2 2 addAndPrint
+4 4 addAndPrint

@@ -1,0 +1,7 @@
+[package]
+name = "stacc"
+version = "2025.1.9"
+edition = "2021"
+
+[dependencies]
+reblessive = "0.4.2"
