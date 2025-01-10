@@ -170,7 +170,7 @@ impl<'a> Scanner<'a> {
                 self.curr -= 1;
                 
                 let name = self.get_substring();
-                self.labels.insert(name, self.tokens.len() - 1);
+                self.labels.insert(name, self.tokens.len());
 
                 self.start -= 1;
                 self.curr += 1;

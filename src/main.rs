@@ -383,8 +383,8 @@ impl Interpreter {
                 TokenType::Jump => {
                     let jump_to = self.checked_pop(curr)?;
                     match jump_to {
-                        Object::Int(amount)       => i = (i + amount as usize) % code.tokens.len(),
-                        Object::Float(amount)     => i = (i + amount as usize) % code.tokens.len(),
+                        Object::Int(amount)       => i = (i as i64 + amount       ) as usize % code.tokens.len(),
+                        Object::Float(amount)     => i = (i as i64 + amount as i64) as usize % code.tokens.len(),
                         Object::String(label) => {
                             if let Some(index) = code.labels.get(&label) {
                                 i = *index;
@@ -398,6 +398,8 @@ impl Interpreter {
                         }
                         Object::Code(code) => ctx.run(|ctx| self.execute(&code, ctx)).await?
                     }
+                    
+                    continue;
                 }
 
                 TokenType::Question => {
@@ -407,18 +409,21 @@ impl Interpreter {
                     match jump_to {
                         Object::Int(amount) => {
                             if condition.is_truthy() {
-                                i = (i + amount as usize) % code.tokens.len()
+                                i = (i as i64 + amount) as usize % code.tokens.len();
+                                continue;
                             }
                         }
                         Object::Float(amount) => {
                             if condition.is_truthy() {
-                                i = (i + amount as usize) % code.tokens.len()
+                                i = (i as i64 + amount as i64) as usize % code.tokens.len();
+                                continue;
                             }
                         }
                         Object::String(label) => {
                             if let Some(index) = code.labels.get(&label) {
                                 if condition.is_truthy() {
                                     i = *index;
+                                    continue;
                                 }
                             } else {
                                 token_runtime_error!(
@@ -465,7 +470,7 @@ impl Interpreter {
                     }
                 }
             }
-
+            
             i += 1;
         }
 
