@@ -55,7 +55,7 @@ Available operations are:
 - `?`: pops the stack twice. The first pop corresponds to the location to jump to (this works the same way as the `^` operator), and the second pop corresponds to the condition. If the condition is truthy, the jump is performed, otherwise, it's not;
 - `:`: defines a function: pops the stack twice. The first pop corresponds to the function name, which has to be a string (if it's not, an error is thrown). The second pop corresponds to the code that will be executed when the function is called, which has t be a code object (if it's not, an error is thrown). Functions can be called by simply referencing their name without quotes in the code. Calling an undefined function will result in an error;
 - `~`: pops the primary stack, depending on the type of the popped value, it performs different operations:
-    - int -> int: bit reversal;
+    - int -> int: bitwise not;
     - float -> int: cast to int;
     - string -> code: parses the code contained in the string and returns a code object representing it. This means that the `~` operator can be used in different combinations for more complex operations:
         - `~^`: parse the code in the string and execute it, "eval" basically. This can also be used to parse integers and floats from strings;
