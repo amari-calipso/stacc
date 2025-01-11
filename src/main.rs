@@ -70,7 +70,6 @@ macro_rules! simple_binary {
                                 $tok, 
                                 format!("Cannot perform this operation on type {:?}", b).as_ref()
                             );
-                            return Err(());
                         }
                     }
                 }
@@ -83,7 +82,6 @@ macro_rules! simple_binary {
                                 $tok, 
                                 format!("Cannot perform this operation on type {:?}", b).as_ref()
                             );
-                            return Err(());
                         }
                     }
                 }
@@ -92,7 +90,6 @@ macro_rules! simple_binary {
                         $tok, 
                         format!("Cannot perform this operation on type {:?}", a).as_ref()
                     );
-                    return Err(());
                 }
             }
         }
@@ -113,14 +110,12 @@ macro_rules! bitwise_binary {
                         $tok, 
                         format!("Cannot perform this operation on type {:?}", b).as_ref()
                     );
-                    return Err(());
                 }
             } else {
                 token_runtime_error!(
                     $tok, 
                     format!("Cannot perform this operation on type {:?}", a).as_ref()
                 );
-                return Err(());
             }
         }
     };
@@ -143,7 +138,6 @@ macro_rules! cmp_binary {
                                     $tok, 
                                     format!("Cannot perform this operation on type {:?}", b).as_ref()
                                 );
-                                return Err(());
                             }
                         }
                     }
@@ -156,7 +150,6 @@ macro_rules! cmp_binary {
                                     $tok, 
                                     format!("Cannot perform this operation on type {:?}", b).as_ref()
                                 );
-                                return Err(());
                             }
                         }
                     }
@@ -168,7 +161,6 @@ macro_rules! cmp_binary {
                                     $tok, 
                                     format!("Cannot perform this operation on type {:?}", b).as_ref()
                                 );
-                                return Err(());
                             }
                         }
                     }
@@ -177,7 +169,6 @@ macro_rules! cmp_binary {
                             $tok, 
                             format!("Cannot perform this operation on type {:?}", a).as_ref()
                         );
-                        return Err(());
                     }
                 }
             };
@@ -201,7 +192,6 @@ impl Interpreter {
             Ok(popped)
         } else {
             token_runtime_error!(tok, "Popped empty primary stack");
-            Err(())
         }
     }
 
@@ -210,7 +200,6 @@ impl Interpreter {
             Ok(popped)
         } else {
             token_runtime_error!(tok, "Popped empty secondary stack");
-            Err(())
         }
     }
  
@@ -253,7 +242,6 @@ impl Interpreter {
                         self.st_stack.push(peeked.clone());
                     } else {
                         token_runtime_error!(curr, "Peeked empty primary stack");
-                        return Err(());
                     }
                 }
                 TokenType::Print => {
@@ -284,7 +272,6 @@ impl Interpreter {
                                 curr, 
                                 format!("Cannot perform this operation on type {:?}", popped).as_ref()
                             );
-                            return Err(());
                         }
                     }
                 }
@@ -304,7 +291,6 @@ impl Interpreter {
                                         curr,
                                         format!("Cannot perform this operation on types {:?} and {:?}", a, b).as_ref()
                                     );
-                                    return Err(());
                                 }
                             }
                         }
@@ -318,7 +304,6 @@ impl Interpreter {
                                         curr, 
                                         format!("Cannot perform this operation on types {:?} and {:?}", a, b).as_ref()
                                     );
-                                    return Err(());
                                 }
                             }
                         }
@@ -332,7 +317,6 @@ impl Interpreter {
                                         curr, 
                                         format!("Cannot perform this operation on types {:?} and {:?}", a, b).as_ref()
                                     );
-                                    return Err(());
                                 }
                             }
                         }
@@ -350,7 +334,6 @@ impl Interpreter {
                                                 curr, 
                                                 format!("Label \"{}\" conflicts between concatenated code objects", label).as_ref()
                                             );
-                                            return Err(());
                                         }
 
                                         result.labels.insert(label, index + x.tokens.len());
@@ -363,7 +346,6 @@ impl Interpreter {
                                         curr, 
                                         format!("Cannot perform this operation on types {:?} and {:?}", a, b).as_ref()
                                     );
-                                    return Err(());
                                 }
                             }
                         }
@@ -393,7 +375,6 @@ impl Interpreter {
                                     curr, 
                                     format!("Unknown label \"{}\"", label).as_ref()
                                 );
-                                return Err(());
                             }
                         }
                         Object::Code(code) => ctx.run(|ctx| self.execute(&code, ctx)).await?
@@ -430,7 +411,6 @@ impl Interpreter {
                                     curr, 
                                     format!("Unknown label \"{}\"", label).as_ref()
                                 );
-                                return Err(());
                             }
                         }
                         Object::Code(code) => ctx.run(|ctx| self.execute(&code, ctx)).await?
@@ -449,14 +429,12 @@ impl Interpreter {
                                 curr, 
                                 format!("Expecting code object as function body (got {:?})", code_obj).as_ref()
                             );
-                            return Err(());
                         }
                     } else {
                         token_runtime_error!(
                             curr, 
                             format!("Expecting string as function name (got {:?})", name_obj).as_ref()
                         );
-                        return Err(());
                     }
                 }
 
@@ -466,7 +444,6 @@ impl Interpreter {
                         ctx.run(|ctx| self.execute(&code, ctx)).await?;
                     } else {
                         token_runtime_error!(curr, "Undefined function");
-                        return Err(());
                     }
                 }
             }

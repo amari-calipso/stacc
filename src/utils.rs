@@ -42,16 +42,10 @@ pub fn runtime_error(source: &Rc<str>, msg: &str, pos: usize, len: usize, line: 
 }
 
 #[macro_export]
-macro_rules! token_error {
-    ($token: expr, $msg: expr) => {
-        crate::utils::error(&$token.source, $msg, $token.pos, $token.end - $token.pos, $token.line);
-    };
-}
-
-#[macro_export]
 macro_rules! token_runtime_error {
     ($token: expr, $msg: expr) => {
         crate::utils::runtime_error(&$token.source, $msg, $token.pos, $token.end - $token.pos, $token.line);
+        return Err(());
     };
 }
 
