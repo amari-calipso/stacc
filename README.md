@@ -23,7 +23,6 @@ Available operations are:
 - `,`: pops the primary stack, and pushes the output on the secondary;
 - `;`: pops the secondary stack, and pushes the output on the primary;
 - `@`: pops the secondary stack, discarding the result;
-    - this implies that `"insert comment here" ,@` is a valid way to create comments (the comment is pushed on the primary stack, moved to the secondary, and discarded).
 - `#`: swaps the primary and secondary stacks (the primary becomes secondary, and viceversa);
 - `.`: duplicates the last value on the primary stack (x = pop, push x, push x);
 - `$`: pops the primary stack, and prints the output;
@@ -57,10 +56,14 @@ Available operations are:
 - `~`: pops the primary stack, depending on the type of the popped value, it performs different operations:
     - int -> int: bitwise not;
     - float -> int: cast to int;
-    - string -> code: parses the code contained in the string and returns a code object representing it. This means that the `~` operator can be used in different combinations for more complex operations:
-        - `~^`: parse the code in the string and execute it, "eval" basically. This can also be used to parse integers and floats from strings;
-        - `~^~`: if used on a string that contains a float, this parses the float and casts it to an integer.
-    - Any other operation will throw an error.
+    - string -> code: parses the code contained in the string and returns a code object representing it.
+
+## Idioms
+Idioms are common sequences of operations that can be useful, some notable examples are:
+    - `"insert comment here",@`: creates a comment;
+    - `,0;-`: makes the last number on the stack negative (or positive, if it's already negative);
+    - `~^`: "eval", parses the code in a string and executes it. This can also be used to parse integers and floats from strings;
+    - `~^~`: if used on a string that contains a float, parses the float and casts it to an integer.
 
 ## What values are truthy?
 Strings, code objects, nonzero integers and floats.
