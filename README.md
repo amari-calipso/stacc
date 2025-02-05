@@ -60,10 +60,10 @@ Available operations are:
 
 ## Idioms
 Idioms are common sequences of operations that can be useful, some notable examples are:
-    - `"insert comment here",@`: creates a comment;
-    - `,0;-`: makes the last number on the stack negative (or positive, if it's already negative);
-    - `~^`: "eval", parses the code in a string and executes it. This can also be used to parse integers and floats from strings;
-    - `~^~`: if used on a string that contains a float, parses the float and casts it to an integer.
+- `"insert comment here",@`: creates a comment;
+- `,0;-`: makes the last number on the stack negative (or positive, if it's already negative);
+- `~^`: "eval", parses the code in a string and executes it. This can also be used to parse integers and floats from strings;
+- `~^~`: if used on a string that contains a float, parses the float and casts it to an integer.
 
 ## What values are truthy?
 Strings, code objects, nonzero integers and floats.
